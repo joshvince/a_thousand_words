@@ -1,19 +1,14 @@
 # AThousandWords
 
-To start your Phoenix server:
+This app has two parts: a Phoenix app and a React app.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Start Phoenix endpoint with `mix phx.server`
+The React app lives in `priv/a_thousand_words`, it uses `create-react-app`.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+You can start its own development server by running `cd priv/a_thousand_words/ && npm start` and look at `localhost:3000`.
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+The phoenix server looks in `priv/a_thousand_words/build` for the static assets, which are only updated
+when you run `cd priv/a_thousand_words/ && npm run build`. Use the React development server when developing UI.
 
-## Learn more
+To run the Phoenix server, run `mix phx.server`. It will be on `localhost:4000`. *Remember: the Phoenix app only looks in `priv/a_thousand_words/build` so will not update when you save changes to JS files.*
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+For all intents and purposes, these are two completely separate apps. 
