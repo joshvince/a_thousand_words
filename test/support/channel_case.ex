@@ -25,13 +25,13 @@ defmodule AThousandWords.Web.ChannelCase do
     end
   end
 
-
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(AThousandWords.Repo)
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(AThousandWords.Repo, {:shared, self()})
-    end
-    :ok
-  end
+# COMMENTED OUT BECAUSE THERE'S NO REPO RIGHT NOW
+  # setup tags do
+  #   :ok = Ecto.Adapters.SQL.Sandbox.checkout(AThousandWords.Repo)
+  #   unless tags[:async] do
+  #     Ecto.Adapters.SQL.Sandbox.mode(AThousandWords.Repo, {:shared, self()})
+  #   end
+  #   :ok
+  # end
 
 end
