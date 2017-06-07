@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import './index.css';
+import socket from './socket';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// Pass in the socket we just imported and send it down to the app component. (This is where redux will come in)
+ReactDOM.render(<App socket={socket}/>, document.getElementById('root'));
