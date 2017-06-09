@@ -47,11 +47,10 @@ config :logger, :console, format: "[$level] $message\n"
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
-# Configure your database
-config :a_thousand_words, AThousandWords.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "a_thousand_words_dev",
-  hostname: "localhost",
-  pool_size: 10
+# Configure ex_aws to call the the development database
+config :ex_aws, :dynamodb,
+  scheme: "http://",
+  host: "localhost",
+  port: 8000,
+  region: "eu-west-1",
+  debug_requests: true
