@@ -25,16 +25,15 @@ defmodule AThousandWords.DataCase do
     end
   end
 
-# COMMENTED OUT BECAUSE THERE'S NO REPO RIGHT NOW
-  # setup tags do
-  #   :ok = Ecto.Adapters.SQL.Sandbox.checkout(AThousandWords.Repo)
+  setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(AThousandWords.Repo)
 
-  #   unless tags[:async] do
-  #     Ecto.Adapters.SQL.Sandbox.mode(AThousandWords.Repo, {:shared, self()})
-  #   end
+    unless tags[:async] do
+      Ecto.Adapters.SQL.Sandbox.mode(AThousandWords.Repo, {:shared, self()})
+    end
 
-  #   :ok
-  # end
+    :ok
+  end
 
   @doc """
   A helper that transform changeset errors to a map of messages.
