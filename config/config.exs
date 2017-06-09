@@ -9,6 +9,10 @@ use Mix.Config
 config :a_thousand_words,
   ecto_repos: [AThousandWords.Repo]
 
+# Configure the repo
+config :a_thousand_words, AThousandWords.Repo,
+  types: AThousandWords.PostgrexTypes
+
 # Configures the endpoint
 config :a_thousand_words, AThousandWords.Web.Endpoint,
   url: [host: "localhost"],

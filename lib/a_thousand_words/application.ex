@@ -8,8 +8,8 @@ defmodule AThousandWords.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
-      # DONT Start the Ecto repository
-      # supervisor(AThousandWords.Repo, []),
+      # Start the Ecto repository
+      supervisor(AThousandWords.Repo, []),
       # Start the endpoint when the application starts
       supervisor(AThousandWords.Web.Endpoint, []),
       # Start your own worker by calling: AThousandWords.Worker.start_link(arg1, arg2, arg3)
