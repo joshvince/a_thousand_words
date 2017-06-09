@@ -13,6 +13,12 @@ defmodule AThousandWords.Web.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/artifacts", AThousandWords.Web do
+    pipe_through :api 
+
+    resources "/pictures", PictureController
+  end
+
   # scope "/", AThousandWords.Web do
   #   pipe_through :browser # Use the default browser stack
 
