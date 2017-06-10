@@ -4,9 +4,10 @@ defmodule AThousandWords.Web.PictureControllerTest do
   alias AThousandWords.Artifacts
   alias AThousandWords.Artifacts.Picture
 
-  @create_attrs %{}
-  @update_attrs %{}
-  @invalid_attrs %{}
+  @geoJSON_point %{"coordinates" => [-0.15157699584960938, 51.434106241971826], "type" => "Point"}
+  @create_attrs %{year: 1960, name: "My Childhood Home", description: "Where I grew up", location: @geoJSON_point}
+  @update_attrs %{year: 1961, location: @geoJSON_point}
+  @invalid_attrs %{year: 1999, description: 0001010101010101001}
 
   def fixture(:picture) do
     {:ok, picture} = Artifacts.create_picture(@create_attrs)
