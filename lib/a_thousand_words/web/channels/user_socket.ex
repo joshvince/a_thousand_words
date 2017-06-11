@@ -4,6 +4,7 @@ defmodule AThousandWords.Web.UserSocket do
   ## Channels
   # channel "room:*", AThousandWords.Web.RoomChannel
   channel "hello:*", AThousandWords.Web.HelloChannel
+  channel "artifacts:pictures", AThousandWords.Web.Artifacts.PictureChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
