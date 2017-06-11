@@ -16,13 +16,14 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
 
   # Test message TODO delete this
   def handle_in("ping", payload, socket) do
-    {:reply, {:ok, payload}, socket}
+    message = %{hello: "world"}
+    {:reply, {:ok, message}, socket}
   end
 
   @doc """
   Replies with a payload containing a list of all the picture structs.
   """
-  def handle_in("list_pictures", _payload, socket) do
+  def handle_in("list_pictures", payload, socket) do
     pictures = Artifacts.list_pictures()
     {:reply, {:ok, %{pictures: pictures}}, socket}
   end
