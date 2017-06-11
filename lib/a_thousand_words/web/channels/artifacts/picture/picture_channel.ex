@@ -22,7 +22,7 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
   @doc """
   Replies with a payload containing a list of all the picture structs.
   """
-  def handle_in("list_pictures", payload, socket) do
+  def handle_in("list_pictures", _payload, socket) do
     pictures = Artifacts.list_pictures()
     {:reply, {:ok, %{pictures: pictures}}, socket}
   end

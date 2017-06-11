@@ -50,7 +50,7 @@ defmodule AThousandWords.Web.Artifacts.PictureChannelTest do
   end
 
   test "delete_picture deletes the picture with the given id from the db", %{socket: socket, params: params} do
-    {:ok, %Artifacts.Picture{id: id} = picture} = Artifacts.create_picture(params)
+    {:ok, %Artifacts.Picture{id: id}} = Artifacts.create_picture(params)
     ref = push socket, "delete_picture", %{"id" => id}
     assert_reply ref, :ok
     refute Repo.get(Artifacts.Picture, id)
