@@ -6,9 +6,15 @@ defmodule AThousandWords.ArtifactsTest do
   describe "pictures" do
     alias AThousandWords.Artifacts.Picture
 
-    @valid_attrs %{}
-    @update_attrs %{}
-    @invalid_attrs %{}
+    @geoJSON_point %{"coordinates" => [-0.15157699584960938, 51.434106241971826], "type" => "Point"}
+    @geoJSON_polygon %{ "coordinates" => [[[-0.1526927947998047, 51.42979863875662],
+                        [-0.13385295867919922, 51.42979863875662],
+                        [-0.13385295867919922, 51.4365407945686],
+                        [-0.1526927947998047, 51.4365407945686],
+                        [-0.1526927947998047, 51.42979863875662]]], "type" => "Polygon"}
+    @valid_attrs %{year: 1960, name: "My Childhood Home", description: "Where I grew up", location: @geoJSON_point}
+    @update_attrs %{year: 1961, name: "My Childhood Home", description: "Where I grew up", location: @geoJSON_polygon}
+    @invalid_attrs %{ year: 1999, description: 0001010101010101001}
 
     def picture_fixture(attrs \\ %{}) do
       {:ok, picture} =

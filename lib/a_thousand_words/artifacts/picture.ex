@@ -15,7 +15,7 @@ defmodule AThousandWords.Artifacts.Picture do
   @doc false
   def changeset(%Picture{} = picture, attrs) do
     picture
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:name, :description, :year, :location])
+    |> validate_required([:name, :description])
   end
 end
