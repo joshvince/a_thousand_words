@@ -10,7 +10,7 @@ const Home = () => {
         </div>
       </div>
       <div className="row">
-        <Link to="/pictures">Pictures</Link>
+        <Link to="/pictures"><h2>Pictures</h2></Link>
       </div>
     </div>
 
