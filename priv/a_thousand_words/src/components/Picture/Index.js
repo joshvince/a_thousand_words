@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import Picture from './Picture.js';
 import PictureList from './List.js';
 import PictureFormHandler from './FormHandler.js';
 
@@ -8,11 +7,17 @@ class PictureIndex extends Component {
   constructor(props){
     super(props)
     let channel = this.props.socket.channel("artifacts:picture", {})
+    this.state ={
+      pictureList: [],
+      channel: channel
+    }
+    // Join the channel
     channel.join()
       .receive("ok", resp => { 
         console.log("Joined successfully", resp) 
       })
       .receive("error", resp => { console.log("Unable to join", resp) })
+    // List the pictures initially
     channel.push("list_pictures")
       .receive("ok", resp => {
         console.log("received", resp)
@@ -23,14 +28,19 @@ class PictureIndex extends Component {
       .receive("error", resp => {
         console.log(`received: ${JSON.stringify(resp)}`)
       })
-    this.state ={
-      pictureList: [],
-      channel: channel
-    }
-  }
-  findById(id, picList){
-    picList.find((pic) => {
-      return pic.hasOwnProperty("id") && pic.id === id
+
+    // reload the list of pictures if something gets deleted or updated
+    channel.on("picture_deleted", resp => {
+      console.log("received picture deleted message", resp)
+      this.setState({
+        pictureList: resp.pictures
+      })
+    })
+    channel.on("picture_updated", resp => {
+      console.log("received picture updated message", resp)
+      this.setState({
+        pictureList: resp.pictures
+      })
     })
   }
   render() {
@@ -49,17 +59,18 @@ class PictureIndex extends Component {
             <Link to="/pictures/all">See all pictures</Link>
           </div>
         </div>
-          <Route exact path="/pictures/all" render={(props) => { return <PictureList list={this.state.pictureList} /> }} />
+          <Route 
+            exact path="/pictures/all" 
+            render={(props) => { 
+              return <PictureList list={this.state.pictureList} channel={this.state.channel}/> 
+            }} 
+          />
           <Route 
             exact path="/pictures/new" 
             render={(props) => { 
               return <PictureFormHandler action="create" channel={this.state.channel} /> 
             }} 
           />
-          {/*TODO: 
-            - EDIT ROUTE 
-            - DELETE ROUTE
-          */}
       </div>
     );
   }

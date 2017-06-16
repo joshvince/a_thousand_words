@@ -1,20 +1,17 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import Summary from './Summary.js';
+import PictureContainer from './Container.js';
+import ParamsDecoder from '../../encoders/Picture/ParamsDecoder.js';
 
-const PictureList = ({list}) => {
+const PictureList = ({list, channel}) => {
   return(
     <div>
       {!list.length ? "" :
         list.map((pic, i) => {
-          var url = `/pictures/${pic.id}`;
+          let picParams = ParamsDecoder.decode(pic)
           return(
             <div className="row" key={i}>
               <div className="column">
-                <Link to={url}>
-                  <Summary params={pic} />
-                </Link>
-                
+                <PictureContainer params={picParams} channel={channel} />
               </div>
             </div>
           );

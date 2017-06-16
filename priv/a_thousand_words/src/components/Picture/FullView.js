@@ -1,20 +1,16 @@
 import React from 'react';
 
-const Picture = ({params, channel}) => {
-  if (!params) {
-    return null
-  }
-  else {
+const PictureFullView = ({params}) => {
     return (
       <div>
         <div className="row">
           <div className="column">
-            <h1>{params.name}</h1>
+            <h3>{params.name}</h3>
           </div>
         </div>
         <div className="row"> 
           <div className="column">
-            <h3>{params.description}</h3>
+            <p>{params.description}</p>
           </div>
         </div>
         <div className="row">
@@ -24,8 +20,7 @@ const Picture = ({params, channel}) => {
         </div>    
       </div>
     )
-  }
 
 }
 
-export default Picture;
+export default PictureFullView;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ParamsEncoder from '../../encoders/Picture/ParamsEncoder.js';
 
 class PictureForm extends Component {
   constructor(props){
@@ -19,7 +20,7 @@ class PictureForm extends Component {
     var value = target.type === 'checkbox' ? target.checked : target.value;
     //convert the year to an integer
     if (name === "year") {
-      value = parseInt(value)
+      value = parseInt(value, 10)
     }
     this.setState({
       [name]: value
@@ -29,23 +30,12 @@ class PictureForm extends Component {
     return name.length > 1 && year > 1801;
   }
   handleCreateSubmit(e){
-    e.preventDefault();
-    var params = this.parseInput(this.state)
+    e.preventDefault()
+    var params = ParamsEncoder.encode(this.state)
     this.props.channel.push("create_picture", {params: params})
       .receive("ok", resp => {
         console.log(resp)
       })
-  }
-  parseInput(params){
-    return {
-      name: params.name,
-      description: params.description,
-      year: params.year,
-      location: {
-        type: "Point",
-        coordinates: params.coordinates.split(",").map((str) => { return parseFloat(str) })
-      }
-    }
   }
   render() {
     var ready = !this.requiredFieldsPresent(this.state.name, this.state.year)
