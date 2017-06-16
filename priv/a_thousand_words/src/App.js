@@ -1,38 +1,20 @@
 import React, { Component } from 'react';
-import Hello from './Hello.js';
-
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import 'milligram';
+
+import Home from './components/Home/Home.js';
+import PictureIndex from './components/Picture/Index.js';
 import './App.css';
 
 class App extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      world: null
-    }
-    let channel = this.props.socket.channel("hello:world", {name: "Josh"})
-    // We now have a phoenix channel we can join.
-    channel.join()
-      .receive("ok", resp => { 
-        console.log("Joined successfully", resp) 
-        this.setState({
-          world: resp
-        })
-      })
-      .receive("error", resp => { console.log("Unable to join", resp) })
-    // channels take .on(msg, resp()) events 
-    // channels can also be pushed to with .push(msg, payload)
-    // this.props.channel.on("ping", resp => {
-    //   console.log("received a ping")
-    // })
-  }
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <Hello world={this.state.world}/>
+      <Router>
+        <div className="container">
+          <Route exact path="/" component={Home}/>
+          <Route path="/pictures" render={(props) => { return <PictureIndex socket={this.props.socket} />}}/>
         </div>
-      </div>
+      </Router>
     );
   }
 }

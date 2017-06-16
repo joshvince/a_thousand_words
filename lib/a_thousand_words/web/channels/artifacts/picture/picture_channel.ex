@@ -16,7 +16,8 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
 
   # Test message TODO delete this
   def handle_in("ping", payload, socket) do
-    {:reply, {:ok, payload}, socket}
+    message = %{hello: "world"}
+    {:reply, {:ok, message}, socket}
   end
 
   @doc """
@@ -43,7 +44,7 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
 
   @doc """
   When passed a payload of picture params, this function will create a new picture in the db 
-  and reply with that picture as a payload to the client.
+  and, in success, will return a payload containing the newly created picture to the client.
 
   If the params are not valid, it will reply with an error and a reason.
   """
@@ -58,34 +59,52 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
 
   @doc """
   When passed the id of a valid picture object already in the db and some params to update,
-  this will update the picture object in the db and return the new picture as the payload to the client.
+  this will update the picture object in the db and, in success, 
+  will broadcast the new list to all clients in the channel.
 
   If it fails to update the picture, it will reply with an error.
   """
   def handle_in("update_picture", %{"params" => picture_params, "id" => picture_id}, socket) do
     with %Picture{} = picture <- Artifacts.get_picture!(picture_id) do
       with {:ok, %Picture{} = updated_picture} <- Artifacts.update_picture(picture, picture_params) do
-        {:reply, {:ok, %{"picture" => updated_picture}}, socket}
+        new_list = Artifacts.list_pictures()
+        broadcast_updates(:updated, {updated_picture, new_list}, socket)
+        # {:reply, {:ok, %{"picture" => updated_picture}}, socket}
+        {:noreply, socket}
       end
     else
-      _error ->
-        {:reply, :error, socket}
+      _anything_else ->
+        {:reply, {:error, %{reason: "error"}}, socket}
     end
   end
 
   @doc """
-  Deletes the picture with the given id from the db if the payload contains a valid picture's id.
+  Deletes the picture with the given id from the db if the payload contains a valid picture's id
+  and, in success, will broadcast the new list to all clients in the channel.
   """
   def handle_in("delete_picture", %{"id" => picture_id}, socket) do
     with %Picture{} = picture <-Artifacts.get_picture!(picture_id) do
-      with {:ok, %Picture{}} <- Artifacts.delete_picture(picture) do
-        {:reply, :ok, socket}
+      with {:ok, %Picture{} = deleted_picture} <- Artifacts.delete_picture(picture) do
+        new_list = Artifacts.list_pictures()
+        # broadcast socket, "picture_deleted", %{pictures: new_list}
+        broadcast_updates(:deleted, {deleted_picture, new_list}, socket)
+        {:noreply, socket}
       end
     else
       _error -> 
         {:reply, :error, socket}
     end
   end
+
+   # Broadcast updates about deleted/updated pictures to the client to update any out-of-date UI.
+    def broadcast_updates(:deleted, {%Picture{} = deleted_picture, new_payload}, socket) do
+      broadcast socket, "picture_deleted", %{pictures: new_payload, updated: deleted_picture}
+    end
+
+    def broadcast_updates(:updated, {%Picture{} = updated_picture, new_payload}, socket) do
+      broadcast socket, "picture_updated", %{pictures: new_payload, updated: updated_picture}
+    end
+
 
   # Add authorization logic here as required.
   defp authorized?(_payload) do

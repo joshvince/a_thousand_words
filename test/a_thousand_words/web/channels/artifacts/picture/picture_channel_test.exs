@@ -18,7 +18,7 @@ defmodule AThousandWords.Web.Artifacts.PictureChannelTest do
 
   test "ping replies with status ok", %{socket: socket} do
     ref = push socket, "ping", %{"hello" => "there"}
-    assert_reply ref, :ok, %{"hello" => "there"}
+    assert_reply ref, :ok, %{hello: "world"}
   end
 
   test "list_pictures sends a reply containing all the pictures", %{socket: socket} do
@@ -34,11 +34,12 @@ defmodule AThousandWords.Web.Artifacts.PictureChannelTest do
     assert Repo.all(Artifacts.Picture) != []
   end
 
-  test "update_picture updates a picture in the db using the payload", %{socket: socket, params: params} do
+  test "update_picture updates a picture in the db using the payload and broadcasts the changes to the channel", %{socket: socket, params: params} do
     {:ok, %Artifacts.Picture{id: id}} = Artifacts.create_picture(params)
     update_params = %{"year" => 2000}
-    ref = push socket, "update_picture", %{"id" => id, "params" => update_params}
-    assert_reply ref, :ok
+    push socket, "update_picture", %{"id" => id, "params" => update_params}
+    pic_list = Repo.all(Artifacts.Picture)
+    assert_broadcast "picture_updated", %{pictures: pic_list} = payload
     assert Repo.get_by(Artifacts.Picture, id: id, year: 2000)
   end
 
@@ -49,10 +50,10 @@ defmodule AThousandWords.Web.Artifacts.PictureChannelTest do
     assert_reply ref, :ok, ^expected_reply
   end
 
-  test "delete_picture deletes the picture with the given id from the db", %{socket: socket, params: params} do
-    {:ok, %Artifacts.Picture{id: id} = picture} = Artifacts.create_picture(params)
-    ref = push socket, "delete_picture", %{"id" => id}
-    assert_reply ref, :ok
+  test "delete_picture deletes the picture with the given id from the db and broadcasts the changes to the channel", %{socket: socket, params: params} do
+    {:ok, %Artifacts.Picture{id: id} = pic} = Artifacts.create_picture(params)
+    push socket, "delete_picture", %{"id" => id}
+    assert_broadcast "picture_deleted", %{pictures: [], updated: pic}
     refute Repo.get(Artifacts.Picture, id)
   end
 
