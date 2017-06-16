@@ -8,7 +8,7 @@ class PictureForm extends Component {
       name: "",
       description: "",
       year: "",
-      coordinates: "unkown"
+      location: "unkown"
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.requiredFieldsPresent = this.requiredFieldsPresent.bind(this);
@@ -50,8 +50,8 @@ class PictureForm extends Component {
           <textarea type="text" value={this.state.description} name="description" onChange={this.handleInputChange}/>
           <label htmlFor="year">Year *</label>
           <input type="number" value={this.state.year} name="year" onChange={this.handleInputChange}/>
-          <label htmlFor="coordinates">Co-Ordinates</label>
-          <select value={this.state.coordinates} name="coordinates" onChange={this.handleInputChange}>
+          <label htmlFor="location">Co-Ordinates</label>
+          <select value={this.state.location} name="location" onChange={this.handleInputChange}>
             <option value="unknown">Unknown</option>
             <option value="-0.3835451602935791,50.82964541856058">Lavington Road</option>
             <option value="-0.3796827793121338,50.82412213350127">South Farm Road</option>
