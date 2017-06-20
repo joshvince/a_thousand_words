@@ -53,9 +53,9 @@ class PictureForm extends Component {
           <label htmlFor="location">Co-Ordinates</label>
           <select value={this.state.location} name="location" onChange={this.handleInputChange}>
             <option value="unknown">Unknown</option>
-            <option value="-0.3835451602935791,50.82964541856058">Lavington Road</option>
-            <option value="-0.3796827793121338,50.82412213350127">South Farm Road</option>
-            <option value="-0.3965163230895996,50.825389497165254">Terringes Avenue</option>
+            <option value="50.82964541856058,-0.3835451602935791">Lavington Road</option>
+            <option value="50.82412213350127,-0.3796827793121338">South Farm Road</option>
+            <option value="50.825389497165254,-0.3965163230895996">Terringes Avenue</option>
           </select>
           <input className="button-primary" type="submit" value="Submit" disabled={ready}/>
           </fieldset>

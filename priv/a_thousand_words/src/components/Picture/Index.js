@@ -58,6 +58,9 @@ class PictureIndex extends Component {
           <div className="column">
             <Link to="/pictures/all">See all pictures</Link>
           </div>
+          <div className="column">
+            <Link to="/pictures/map">View the map</Link>
+          </div>
         </div>
           <Route 
             exact path="/pictures/all" 

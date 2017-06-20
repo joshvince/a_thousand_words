@@ -4,6 +4,7 @@ import 'milligram';
 
 import Home from './components/Home/Home.js';
 import PictureIndex from './components/Picture/Index.js';
+import MapContainer from './components/Map/Container.js';
 import './App.css';
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
         <div className="container">
           <Route exact path="/" component={Home}/>
           <Route path="/pictures" render={(props) => { return <PictureIndex socket={this.props.socket} />}}/>
+          <Route exact path="/pictures/map" render={(props) => { return <MapContainer socket={this.props.socket} />}} />          
         </div>
       </Router>
     );

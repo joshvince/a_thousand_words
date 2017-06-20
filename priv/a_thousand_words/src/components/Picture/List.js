@@ -5,7 +5,7 @@ import ParamsDecoder from '../../encoders/Picture/ParamsDecoder.js';
 const PictureList = ({list, channel}) => {
   return(
     <div>
-      {!list.length ? "" :
+      {!list.length ? "no pictures here" :
         list.map((pic, i) => {
           let picParams = ParamsDecoder.decode(pic)
           return(
