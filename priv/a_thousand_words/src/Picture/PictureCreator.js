@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import ParamsEncoder from '../../encoders/Picture/ParamsEncoder.js';
+import LocationSelector from '../Map/LocationSelector.js';
+import ParamsEncoder from '../Encoders/Picture/ParamsEncoder.js';
+import PictureChannel from '../Socket/pictureChannel.js';
 
-class PictureForm extends Component {
+class PictureCreator extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -10,6 +12,7 @@ class PictureForm extends Component {
       year: "",
       location: "unkown"
     }
+    this.setLocation = this.setLocation.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.requiredFieldsPresent = this.requiredFieldsPresent.bind(this);
     this.handleCreateSubmit = this.handleCreateSubmit.bind(this);
@@ -30,16 +33,19 @@ class PictureForm extends Component {
     return name.length > 1 && year > 1801;
   }
   handleCreateSubmit(e){
+    console.log("fired create submit")
     e.preventDefault()
     var params = ParamsEncoder.encode(this.state)
-    this.props.channel.push("create_picture", {params: params})
-      .receive("ok", resp => {
-        console.log(resp)
-      })
+    PictureChannel.createPicture(this.props.channel, params)
+  }
+  setLocation(locationParams){
+    this.setState({
+      location: locationParams
+    })
   }
   render() {
     var ready = !this.requiredFieldsPresent(this.state.name, this.state.year)
-    return(
+    return (
       <div className="column">
         <h3>Create a new picture</h3>
         <form onSubmit={this.handleCreateSubmit}>
@@ -50,13 +56,8 @@ class PictureForm extends Component {
           <textarea type="text" value={this.state.description} name="description" onChange={this.handleInputChange}/>
           <label htmlFor="year">Year *</label>
           <input type="number" value={this.state.year} name="year" onChange={this.handleInputChange}/>
-          <label htmlFor="location">Co-Ordinates</label>
-          <select value={this.state.location} name="location" onChange={this.handleInputChange}>
-            <option value="unknown">Unknown</option>
-            <option value="-0.3835451602935791,50.82964541856058">Lavington Road</option>
-            <option value="-0.3796827793121338,50.82412213350127">South Farm Road</option>
-            <option value="-0.3965163230895996,50.825389497165254">Terringes Avenue</option>
-          </select>
+          <label htmlFor="location">Co-ordinates</label>
+          <LocationSelector onLocationChange={this.setLocation}/>
           <input className="button-primary" type="submit" value="Submit" disabled={ready}/>
           </fieldset>
         </form>   
@@ -65,4 +66,4 @@ class PictureForm extends Component {
   }
 }
 
-export default PictureForm;
+export default PictureCreator;

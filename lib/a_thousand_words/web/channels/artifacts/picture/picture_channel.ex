@@ -49,8 +49,10 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
   If the params are not valid, it will reply with an error and a reason.
   """
   def handle_in("create_picture", %{"params" => picture_params}, socket) do
-    with {:ok, %Picture{} = picture} <- Artifacts.create_picture(picture_params) do
-      {:reply, {:ok, %{picture: picture}}, socket}
+    with {:ok, %Picture{} = new_picture} <- Artifacts.create_picture(picture_params) do
+      new_list = Artifacts.list_pictures()
+      broadcast_updates(:created, {new_picture, new_list}, socket)
+      {:noreply, socket}
     else
       {:error, reason} -> 
         {:reply, {:error, %{reason: reason}}, socket}
@@ -69,7 +71,6 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
       with {:ok, %Picture{} = updated_picture} <- Artifacts.update_picture(picture, picture_params) do
         new_list = Artifacts.list_pictures()
         broadcast_updates(:updated, {updated_picture, new_list}, socket)
-        # {:reply, {:ok, %{"picture" => updated_picture}}, socket}
         {:noreply, socket}
       end
     else
@@ -86,7 +87,6 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
     with %Picture{} = picture <-Artifacts.get_picture!(picture_id) do
       with {:ok, %Picture{} = deleted_picture} <- Artifacts.delete_picture(picture) do
         new_list = Artifacts.list_pictures()
-        # broadcast socket, "picture_deleted", %{pictures: new_list}
         broadcast_updates(:deleted, {deleted_picture, new_list}, socket)
         {:noreply, socket}
       end
@@ -96,14 +96,18 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
     end
   end
 
-   # Broadcast updates about deleted/updated pictures to the client to update any out-of-date UI.
-    def broadcast_updates(:deleted, {%Picture{} = deleted_picture, new_payload}, socket) do
-      broadcast socket, "picture_deleted", %{pictures: new_payload, updated: deleted_picture}
-    end
+  # Broadcast updates about new/deleted/updated pictures to the client to update any out-of-date UI.
+  def broadcast_updates(:created, {%Picture{} = new_picture, new_payload}, socket) do
+    broadcast socket, "picture_created", %{pictures: new_payload, updated: new_picture}
+  end
 
-    def broadcast_updates(:updated, {%Picture{} = updated_picture, new_payload}, socket) do
-      broadcast socket, "picture_updated", %{pictures: new_payload, updated: updated_picture}
-    end
+  def broadcast_updates(:deleted, {%Picture{} = deleted_picture, new_payload}, socket) do
+    broadcast socket, "picture_deleted", %{pictures: new_payload, updated: deleted_picture}
+  end
+
+  def broadcast_updates(:updated, {%Picture{} = updated_picture, new_payload}, socket) do
+    broadcast socket, "picture_updated", %{pictures: new_payload, updated: updated_picture}
+  end
 
 
   # Add authorization logic here as required.

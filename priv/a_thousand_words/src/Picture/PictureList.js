@@ -1,24 +1,22 @@
 import React from 'react';
-import PictureContainer from './Container.js';
-import ParamsDecoder from '../../encoders/Picture/ParamsDecoder.js';
+import PictureViewContainer from './PictureViewContainer.js';
 
 const PictureList = ({list, channel}) => {
   return(
     <div>
-      {!list.length ? "" :
+      {!list.length ? "nothing here" : 
         list.map((pic, i) => {
-          let picParams = ParamsDecoder.decode(pic)
           return(
             <div className="row" key={i}>
               <div className="column">
-                <PictureContainer params={picParams} channel={channel} />
+                <PictureViewContainer pictureParams={pic} channel={channel}/>
               </div>
             </div>
-          );
+          )
         })
       }
     </div>
-  )
-}
+  );
+};
 
 export default PictureList;

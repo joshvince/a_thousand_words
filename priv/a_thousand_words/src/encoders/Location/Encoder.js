@@ -7,6 +7,24 @@ const stringToGeoPoint = (params) => {
   }
 }
 
+const arrayToGeoPoint = (paramsArray) => {
+  return {
+    type: "Point",
+    coordinates: paramsArray
+  }
+}
+
+const inputToGeoPoint = (input) => {
+  if (typeof input === 'string') {
+    return stringToGeoPoint(input)
+  }
+  else if (typeof input === 'object') {
+    return arrayToGeoPoint(input)
+  }
+};
+
 module.exports = {
-  stringToGeoPoint: stringToGeoPoint
+  stringToGeoPoint: stringToGeoPoint,
+  arrayToGeoPoint: arrayToGeoPoint,
+  inputToGeoPoint: inputToGeoPoint
 }

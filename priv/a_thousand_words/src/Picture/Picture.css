@@ -1,0 +1,9 @@
+.imgContainer{
+  max-width: 100%;
+  border-radius: 10%;
+}
+
+img{
+  width: 100%;
+  height: auto;
+}
