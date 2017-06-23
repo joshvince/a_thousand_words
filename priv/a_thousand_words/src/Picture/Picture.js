@@ -1,9 +1,9 @@
 import React from 'react';
-import './styles.css';
-import FullModal from '../../Modals/FullModal.js';
+import './Picture.css';
+import FullModal from '../App/FullModal.js';
 import CAGE from './cage.png';
 
-const DetailView = ({picture, dismissAction}) => {
+const Picture = ({picture, button, dismissAction}) => {
   return(
     <FullModal dismissAction={dismissAction}>
       <div className="row">
@@ -25,9 +25,14 @@ const DetailView = ({picture, dismissAction}) => {
         <div className="column">
           <p>{picture.description}</p>
         </div>
-      </div>      
+      </div>
+      <div className="row">
+        <div className="column">
+          {button}
+        </div>
+      </div>          
     </FullModal>
   )
 }
 
-export default DetailView;
+export default Picture;

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
-import Pin from '../Picture/Map/Pin.js';
-import DetailView from '../Picture/Map/DetailView.js';
-import './styles.css';
+import Pin from './Pin.js';
+import Picture from '../Picture/Picture.js';
+import './PictureMap.css';
 
-class Map extends Component {
+class PictureMap extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -26,9 +26,13 @@ class Map extends Component {
       activePicture: {}
     })
   }
+  clicker({x, y, lat, lng, event}){
+    console.log(lat, lng)
+  }
   render() {
     let activePicture = (this.state.pictureActive) ? 
-      <DetailView picture={this.state.activePicture} dismissAction={this.removeActivePicture}/> : null
+      <Picture picture={this.state.activePicture} dismissAction={this.removeActivePicture} button={null}/> 
+      : null
     return(
       <div>
         {activePicture}
@@ -37,9 +41,11 @@ class Map extends Component {
             id="map"
             apiKey={"AIzaSyC7ivn_jzMKgf2_LZhHPHxAknOPx_6F28Y"}
             defaultZoom={13}
-            defaultCenter={{lat: 50.82, lng: -0.38 }} 
+            center={{lat: 50.82, lng: -0.38 }}
+            options={{gestureHandling: 'greedy'}}
+            onClick={this.clicker} 
           >
-            {this.props.pictures.map((pic, i)=> {
+            {this.props.pictureList.map((pic, i)=> {
               return(
                 <Pin 
                 picture={pic} 
@@ -58,4 +64,4 @@ class Map extends Component {
   }
 }
 
-export default Map;
+export default PictureMap;

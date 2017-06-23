@@ -12,7 +12,7 @@ const encode = (params) => {
       name: params.name,
       description: params.description,
       year: convertToInt(params.year),
-      location: LocationEncoder.stringToGeoPoint(params.location)
+      location: LocationEncoder.inputToGeoPoint(params.location)
   }
 }
 

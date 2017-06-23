@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.css';
+import './FullModal.css';
 
 const FullModal = ({dismissAction, children}) => {
   return(

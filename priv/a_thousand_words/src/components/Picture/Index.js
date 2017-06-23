@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import PictureList from './List.js';
 import PictureFormHandler from './FormHandler.js';
+import PictureCreator from './Creator.js';
 
 class PictureIndex extends Component {
   constructor(props){
@@ -71,7 +72,8 @@ class PictureIndex extends Component {
           <Route 
             exact path="/pictures/new" 
             render={(props) => { 
-              return <PictureFormHandler action="create" channel={this.state.channel} /> 
+              // return <PictureFormHandler action="create" channel={this.state.channel} /> 
+              return <PictureCreator channel={this.state.channel}/>
             }} 
           />
       </div>
