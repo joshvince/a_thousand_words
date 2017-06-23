@@ -1,8 +1,12 @@
 import React from 'react';
 
-const PictureSummary = () => {
+const PictureSummary = ({pictureParams}) => {
   return(
-    <div>Summary</div>
+    <div>
+      <div>{pictureParams.name}</div>
+      <div>{pictureParams.year}</div>
+    </div>
+
   )
 };
 

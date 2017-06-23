@@ -5,7 +5,6 @@ import 'milligram';
 
 // Import components and styles
 import Nav from './Nav.js';
-import Home from './Home.js';
 import PictureMap from '../Map/PictureMap.js';
 import PictureCreator from '../Picture/PictureCreator.js';
 import PictureList from '../Picture/PictureList.js';
@@ -57,8 +56,8 @@ class App extends Component {
             render={(props) => { return <PictureCreator channel={this.state.channel} />}}
           />
           <Route 
-            exact path="/pictures/all"
-            render={(props) => { return <PictureList list={this.state.pictureList} />}}
+            exact path="/pictures/edit"
+            render={(props) => { return <PictureList list={this.state.pictureList} channel={this.state.channel}/>}}
           />
 
         </div>
@@ -66,9 +65,5 @@ class App extends Component {
     );
   }
 }
-
-// <Route path="/pictures" render={(props) => { return <PictureIndex socket={this.props.socket} />}}/>
-// <Route exact path="/pictures/map" render={(props) => { return <MapContainer socket={this.props.socket} />}} />          
-// <Route exact path="/test" render={(props) => { return <Home socket={this.props.socket}/>}} />
 
 export default App;

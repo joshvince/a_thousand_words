@@ -17,7 +17,10 @@ const join = (socket) => {
 // create picture
 // takes in a channel object and some picture params, creates a picture and returns the response from the server
 const createPicture = (channel, pictureParams) => {
-  //todo
+  channel.push("create_picture", {params: pictureParams})
+    .receive("ok", resp => {
+      console.log(resp)
+    })
 };
 
 // list pictures 
@@ -38,8 +41,11 @@ const listPictures = (channel) => {
 
 
 // delete picture
-const deletePicture = (picture) => {
-  //todo
+const deletePicture = (channel, picture) => {
+  channel.push("delete_picture", {id: picture.id})
+    .receive("ok", resp => {
+      console.log("Picture deleted, resp is: ", resp)
+    })
 };
 
 module.exports = {

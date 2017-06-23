@@ -17,7 +17,7 @@ const Nav = () => {
           <Link to="/pictures/new">Create a new picture</Link>
         </div>
         <div className="column">
-          <Link to="/pictures/all">See all pictures</Link>
+          <Link to="/pictures/edit">Edit pictures</Link>
         </div>
       </div>
     </div>

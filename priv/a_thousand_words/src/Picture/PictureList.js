@@ -1,15 +1,15 @@
 import React from 'react';
 import PictureViewContainer from './PictureViewContainer.js';
 
-const PictureList = ({list}) => {
+const PictureList = ({list, channel}) => {
   return(
     <div>
       {!list.length ? "nothing here" : 
         list.map((pic, i) => {
           return(
-            <div className="row">
+            <div className="row" key={i}>
               <div className="column">
-                <PictureViewContainer pictureParams={pic} />
+                <PictureViewContainer pictureParams={pic} channel={channel}/>
               </div>
             </div>
           )

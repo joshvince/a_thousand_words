@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LocationSelector from '../Map/LocationSelector.js';
 import ParamsEncoder from '../Encoders/Picture/ParamsEncoder.js';
+import PictureChannel from '../Socket/pictureChannel.js';
 
 class PictureCreator extends Component {
   constructor(props){
@@ -35,16 +36,12 @@ class PictureCreator extends Component {
     console.log("fired create submit")
     e.preventDefault()
     var params = ParamsEncoder.encode(this.state)
-    this.props.channel.push("create_picture", {params: params})
-      .receive("ok", resp => {
-        console.log(resp)
-      })
+    PictureChannel.createPicture(this.props.channel, params)
   }
   setLocation(locationParams){
     this.setState({
       location: locationParams
     })
-    console.log("TEST", locationParams)
   }
   render() {
     var ready = !this.requiredFieldsPresent(this.state.name, this.state.year)
@@ -59,8 +56,8 @@ class PictureCreator extends Component {
           <textarea type="text" value={this.state.description} name="description" onChange={this.handleInputChange}/>
           <label htmlFor="year">Year *</label>
           <input type="number" value={this.state.year} name="year" onChange={this.handleInputChange}/>
-          <label htmlFor="location">Co-Ordinates</label>
-          <LocationSelector clickHandler={this.setLocation}/>
+          <label htmlFor="location">Co-ordinates</label>
+          <LocationSelector onLocationChange={this.setLocation}/>
           <input className="button-primary" type="submit" value="Submit" disabled={ready}/>
           </fieldset>
         </form>   
