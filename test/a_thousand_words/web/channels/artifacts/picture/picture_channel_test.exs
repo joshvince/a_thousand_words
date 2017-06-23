@@ -27,33 +27,36 @@ defmodule AThousandWords.Web.Artifacts.PictureChannelTest do
     assert_reply ref, :ok, ^expected_payload
   end
 
-  test "create_picture creates a picture in the db using the payload", %{socket: socket, params: params} do
-    ref = push socket, "create_picture", %{"params" => params}
-    assert_reply ref, :ok, returned_payload
-    assert is_map(returned_payload.picture)
-    assert Repo.all(Artifacts.Picture) != []
+  test "create_picture creates a picture in the db using the payload and broadcasts the changes", 
+  %{socket: socket, params: params} do
+    push socket, "create_picture", %{"params" => params}
+    assert_broadcast "picture_created", %{pictures: _list} = _payload
+    pic_list = Repo.all(Artifacts.Picture)
+    assert Enum.count(pic_list) > 0
   end
 
-  test "update_picture updates a picture in the db using the payload and broadcasts the changes to the channel", %{socket: socket, params: params} do
+  test "update_picture updates a picture in the db using the payload and broadcasts the changes to the channel", 
+  %{socket: socket, params: params} do
     {:ok, %Artifacts.Picture{id: id}} = Artifacts.create_picture(params)
     update_params = %{"year" => 2000}
     push socket, "update_picture", %{"id" => id, "params" => update_params}
-    pic_list = Repo.all(Artifacts.Picture)
-    assert_broadcast "picture_updated", %{pictures: pic_list} = payload
+    assert_broadcast "picture_updated", %{pictures: _pic_list} = _payload
     assert Repo.get_by(Artifacts.Picture, id: id, year: 2000)
   end
 
-  test "get_picture returns the picture with the given id if there was one", %{socket: socket, params: params} do
+  test "get_picture returns the picture with the given id if there was one", 
+  %{socket: socket, params: params} do
     {:ok, %Artifacts.Picture{id: id} = picture} = Artifacts.create_picture(params)
     ref = push socket, "get_picture", %{"id" => id}
     expected_reply = %{picture: picture}
     assert_reply ref, :ok, ^expected_reply
   end
 
-  test "delete_picture deletes the picture with the given id from the db and broadcasts the changes to the channel", %{socket: socket, params: params} do
-    {:ok, %Artifacts.Picture{id: id} = pic} = Artifacts.create_picture(params)
+  test "delete_picture deletes the picture with the given id from the db and broadcasts the changes to the channel", 
+  %{socket: socket, params: params} do
+    {:ok, %Artifacts.Picture{id: id}} = Artifacts.create_picture(params)
     push socket, "delete_picture", %{"id" => id}
-    assert_broadcast "picture_deleted", %{pictures: [], updated: pic}
+    assert_broadcast "picture_deleted", %{pictures: []}
     refute Repo.get(Artifacts.Picture, id)
   end
 

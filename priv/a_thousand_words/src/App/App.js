@@ -29,6 +29,12 @@ class App extends Component {
         this.setState({pictureList: pics})
     })
     // any updates from the channel will trigger a re-render of every child component for now...
+    this.state.channel.on("picture_created", resp => {
+      console.log("received picture created message", resp)
+      this.setState({
+        pictureList: resp.pictures
+      })
+    })
     this.state.channel.on("picture_deleted", resp => {
       console.log("received picture deleted message", resp)
       this.setState({
