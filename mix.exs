@@ -17,7 +17,7 @@ defmodule AThousandWords.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {AThousandWords.Application, []},
-     extra_applications: [:logger, :runtime_tools]]
+     extra_applications: [:logger, :runtime_tools, :ex_aws, :hackney, :poison, :arc_ecto]]
   end
 
   # Specifies which paths to compile per environment.
@@ -37,7 +37,15 @@ defmodule AThousandWords.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:plug_static_index_html, "~> 0.1.2"},
-     {:geo, "~> 1.4"}]
+     {:geo, "~> 1.4"},
+     {:ex_aws, "~> 1.0"},
+     {:hackney, "~> 1.6"},
+     {:poison, "~> 3.1"},
+     {:sweet_xml, "~> 0.6"},
+     {:configparser_ex, "~> 0.2.1"},
+     {:uuid, "~> 1.1" },
+     {:arc, "~> 0.8.0"},
+     {:arc_ecto, "~> 0.7.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

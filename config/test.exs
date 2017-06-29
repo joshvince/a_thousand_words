@@ -17,3 +17,6 @@ config :a_thousand_words, AThousandWords.Repo,
   database: "a_thousand_words_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Use the fake image uploader in tests so as not to ping S3 all the time
+config :a_thousand_words, :image_uploader, AThousandWords.FakeImageUploader

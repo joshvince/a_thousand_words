@@ -2,6 +2,7 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
   use AThousandWords.Web, :channel
   alias AThousandWords.Artifacts
   alias AThousandWords.Artifacts.Picture
+
   @moduledoc """
   A channel allowing a client to perform CRUD actions on Pictures.
   """
@@ -14,16 +15,10 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
     end
   end
 
-  # Test message TODO delete this
-  def handle_in("ping", payload, socket) do
-    message = %{hello: "world"}
-    {:reply, {:ok, message}, socket}
-  end
-
   @doc """
   Replies with a payload containing a list of all the picture structs.
   """
-  def handle_in("list_pictures", payload, socket) do
+  def handle_in("list_pictures", _payload, socket) do
     pictures = Artifacts.list_pictures()
     {:reply, {:ok, %{pictures: pictures}}, socket}
   end
@@ -49,7 +44,8 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
   If the params are not valid, it will reply with an error and a reason.
   """
   def handle_in("create_picture", %{"params" => picture_params}, socket) do
-    with {:ok, %Picture{} = new_picture} <- Artifacts.create_picture(picture_params) do
+    atomised_params = keys_to_atoms(picture_params)
+    with {:ok, %Picture{} = new_picture} <- Artifacts.create_picture(atomised_params) do
       new_list = Artifacts.list_pictures()
       broadcast_updates(:created, {new_picture, new_list}, socket)
       {:noreply, socket}
@@ -68,7 +64,8 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
   """
   def handle_in("update_picture", %{"params" => picture_params, "id" => picture_id}, socket) do
     with %Picture{} = picture <- Artifacts.get_picture!(picture_id) do
-      with {:ok, %Picture{} = updated_picture} <- Artifacts.update_picture(picture, picture_params) do
+      atomised_params = keys_to_atoms(picture_params)
+      with {:ok, %Picture{} = updated_picture} <- Artifacts.update_picture(picture, atomised_params) do
         new_list = Artifacts.list_pictures()
         broadcast_updates(:updated, {updated_picture, new_list}, socket)
         {:noreply, socket}
@@ -109,6 +106,11 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
     broadcast socket, "picture_updated", %{pictures: new_payload, updated: updated_picture}
   end
 
+  # PRIVATE FUNCTIONS
+
+  defp keys_to_atoms(params) do
+    Map.new(params, fn {k, v} -> {String.to_atom(k), v} end)
+  end
 
   # Add authorization logic here as required.
   defp authorized?(_payload) do

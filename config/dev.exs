@@ -55,3 +55,5 @@ config :a_thousand_words, AThousandWords.Repo,
   database: "a_thousand_words_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :a_thousand_words, :image_uploader, AThousandWords.ImageUploader

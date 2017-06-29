@@ -50,9 +50,13 @@ defmodule AThousandWords.Artifacts do
 
   """
   def create_picture(attrs \\ %{}) do
-    %Picture{}
-    |> Picture.changeset(attrs)
-    |> Repo.insert()
+    with {:ok, filename} <- Picture.upload_image(attrs.image) do
+      url = Picture.get_image_url(filename)
+      updated_attrs = Map.put(attrs, :image, url)
+      %Picture{}
+      |> Picture.changeset(updated_attrs)
+      |> Repo.insert()
+    end
   end
 
   @doc """
