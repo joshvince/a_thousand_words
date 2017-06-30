@@ -56,4 +56,5 @@ config :a_thousand_words, AThousandWords.Repo,
   hostname: "localhost",
   pool_size: 10
 
-config :a_thousand_words, :image_uploader, AThousandWords.ImageUploader
+config :a_thousand_words, :image_uploader, AThousandWords.FakeImageUploader
+config :a_thousand_words, :image_directory, "priv/static/uploads/images"

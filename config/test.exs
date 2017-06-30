@@ -20,3 +20,4 @@ config :a_thousand_words, AThousandWords.Repo,
 
 # Use the fake image uploader in tests so as not to ping S3 all the time
 config :a_thousand_words, :image_uploader, AThousandWords.FakeImageUploader
+config :a_thousand_words, :image_directory, "uploads/test"

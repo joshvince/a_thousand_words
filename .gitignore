@@ -26,6 +26,7 @@ erl_crash.dump
 .env.test.local
 .env.production.local
 uploads/*
+priv/static/*
 
 # JS/React
 

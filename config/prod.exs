@@ -59,6 +59,8 @@ config :logger, level: :info
 #     config :a_thousand_words, AThousandWords.Web.Endpoint, server: true
 #
 
+config :a_thousand_words, :image_uploader, AThousandWords.ImageUploader
+
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
 import_config "prod.secret.exs"

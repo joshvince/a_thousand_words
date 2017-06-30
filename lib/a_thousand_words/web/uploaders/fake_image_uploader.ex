@@ -11,6 +11,7 @@ defmodule AThousandWords.FakeImageUploader do
   """
 
   @versions [:original]
+  @image_directory Application.get_env(:a_thousand_words, :image_directory)
 
   def __storage, do: Arc.Storage.Local
 
@@ -28,13 +29,13 @@ defmodule AThousandWords.FakeImageUploader do
   # end
 
   # Override the persisted filenames:
-  def filename(_version, _) do
-    UUID.uuid4(:hex)
-  end
+  # def filename(version, {file, scope}) do
+  #   UUID.uuid4(:hex)
+  # end
 
   # Override the storage directory:
   def storage_dir(_version, _file_scope) do
-    "uploads/images"
+    @image_directory
   end
 
   # Provide a default URL if there hasn't been a file uploaded

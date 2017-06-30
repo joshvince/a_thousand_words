@@ -8,7 +8,7 @@ const Picture = ({picture, button, dismissAction}) => {
     <FullModal dismissAction={dismissAction}>
       <div className="row">
         <div className="column imgContainer">
-          <img src={CAGE} alt="cage"/>
+          <img src={picture.image} alt="cage"/>
         </div>
       </div>
       <div className="row">

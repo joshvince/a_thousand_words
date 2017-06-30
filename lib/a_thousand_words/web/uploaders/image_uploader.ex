@@ -19,9 +19,9 @@ defmodule AThousandWords.ImageUploader do
   # end
 
   # Override the persisted filenames:
-  def filename(_version, _) do
-    UUID.uuid4(:hex)
-  end
+  # def filename(_version, _) do
+  #   UUID.uuid4(:hex)
+  # end
 
   # Override the storage directory:
   def storage_dir(_version, {_file, _scope}) do
