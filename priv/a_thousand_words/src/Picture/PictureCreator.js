@@ -49,8 +49,8 @@ class PictureCreator extends Component {
     }, false)
     reader.readAsDataURL(file)
   }
-  requiredFieldsPresent(name, year){
-    return name.length > 1 && year > 1801;
+  requiredFieldsPresent(state){
+    return state.name.length > 1 && state.year > 1801 && state.image.hasOwnProperty("filename");
   }
   handleCreateSubmit(e){
     console.log("fired create submit")
@@ -64,7 +64,9 @@ class PictureCreator extends Component {
     })
   }
   render() {
-    var ready = !this.requiredFieldsPresent(this.state.name, this.state.year)
+    // var ready = !this.requiredFieldsPresent(this.state.name, this.state.year)
+    var ready = !this.requiredFieldsPresent(this.state)
+
     return (
       <div className="column">
         <h3>Create a new picture</h3>

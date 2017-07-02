@@ -1,7 +1,6 @@
 import React from 'react';
 import './Picture.css';
 import FullModal from '../App/FullModal.js';
-import CAGE from './cage.png';
 
 const Picture = ({picture, button, dismissAction}) => {
   return(
