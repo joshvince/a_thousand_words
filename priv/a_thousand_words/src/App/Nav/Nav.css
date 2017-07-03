@@ -1,0 +1,29 @@
+#nav-container {
+  height: 6rem;
+  background-color: black;
+  color: white;
+  position: fixed;
+  width: 100vw;
+  z-index: 950;
+  display: flex;
+  justify-content: space-between;
+}
+
+#logo{
+  padding: 1rem;
+  
+}
+
+#nav-menu{
+  display: flex;
+  justify-content: center;
+}
+
+#nav-menu > div, #logo {
+  padding: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
