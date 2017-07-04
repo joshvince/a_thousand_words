@@ -21,13 +21,21 @@ class LocationSelector extends Component {
     this.props.onLocationChange([lat,lng]);
   }
   render() {
-    let locationPin = this.state.pin ? <Pin lat={this.state.pinLat} lng={this.state.pinLng} /> : null
+    let locationPin = this.state.pin ? 
+        <Pin 
+          lat={this.state.pinLat} 
+          lng={this.state.pinLng} 
+          clickHandler={e => {return null}}
+        /> : 
+        null
     return (
       <div id="mapContainer">
         <GoogleMapReact 
           id="map"
-          apiKey={"AIzaSyC7ivn_jzMKgf2_LZhHPHxAknOPx_6F28Y"}
-          defaultZoom={10}
+          bootstrapURLKeys={{
+            key: "AIzaSyC7ivn_jzMKgf2_LZhHPHxAknOPx_6F28Y"
+          }}          
+          defaultZoom={7}
           center={{lat: 50.82, lng: -0.38 }}
           options={{gestureHandling: 'greedy'}}
           onClick={e => { this.movePin(e) }} 

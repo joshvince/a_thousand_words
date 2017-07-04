@@ -8,12 +8,14 @@ class PictureCreator extends Component {
     super(props)
     this.state = {
       name: "",
+      image: {},
       description: "",
       year: "",
       location: "unkown"
     }
     this.setLocation = this.setLocation.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.onFileSelect = this.onFileSelect.bind(this);
     this.requiredFieldsPresent = this.requiredFieldsPresent.bind(this);
     this.handleCreateSubmit = this.handleCreateSubmit.bind(this);
   }
@@ -29,8 +31,26 @@ class PictureCreator extends Component {
       [name]: value
     })
   }
-  requiredFieldsPresent(name, year){
-    return name.length > 1 && year > 1801;
+  onFileSelect(){
+    // grab the file from the form
+    let fileInput = document.getElementById("userImg");
+    let file = fileInput.files[0];
+    // create a new FileReader to handle the binary
+    let reader = new FileReader();
+    // on the load event, create a payload featuring the binary and add to the state
+    reader.addEventListener("load", () => {
+      let payload = {
+        binary: reader.result.split(",", 2)[1],
+        filename: file.name
+      }
+      this.setState({
+        image: payload
+      })
+    }, false)
+    reader.readAsDataURL(file)
+  }
+  requiredFieldsPresent(state){
+    return state.name.length > 1 && state.year > 1801 && state.image.hasOwnProperty("filename");
   }
   handleCreateSubmit(e){
     console.log("fired create submit")
@@ -44,12 +64,16 @@ class PictureCreator extends Component {
     })
   }
   render() {
-    var ready = !this.requiredFieldsPresent(this.state.name, this.state.year)
+    // var ready = !this.requiredFieldsPresent(this.state.name, this.state.year)
+    var ready = !this.requiredFieldsPresent(this.state)
+
     return (
       <div className="column">
         <h3>Create a new picture</h3>
         <form onSubmit={this.handleCreateSubmit}>
           <fieldset>
+          <label htmlFor="image">Image *</label>
+          <input id="userImg" type="file" name="image" accept="image/*" onChange={this.onFileSelect}/>  
           <label htmlFor="name">Name *</label>
           <input type="text" value={this.state.name} name="name" onChange={this.handleInputChange}/>
           <label htmlFor="description">Description</label>

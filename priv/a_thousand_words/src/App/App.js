@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import 'milligram';
 
 // Import components and styles
-import Nav from './Nav.js';
+import Nav from './Nav/Nav.js';
 import PictureMap from '../Map/PictureMap.js';
 import PictureCreator from '../Picture/PictureCreator.js';
 import PictureList from '../Picture/PictureList.js';
@@ -12,7 +12,7 @@ import './App.css';
 
 // Import other helper modules
 import PictureChannel from '../Socket/pictureChannel.js';
-
+import PicParamsDecoder from '../Encoders/Picture/ParamsDecoder.js';
 
 class App extends Component {
   constructor(props){
@@ -26,7 +26,8 @@ class App extends Component {
   componentDidMount(){
     PictureChannel.listPictures(this.state.channel)
       .then(pics => {
-        this.setState({pictureList: pics})
+        let decodedPics = pics.map((pic) => { return PicParamsDecoder.decode(pic)})
+        this.setState({pictureList: decodedPics})
     })
     // any updates from the channel will trigger a re-render of every child component for now...
     this.state.channel.on("picture_created", resp => {
@@ -51,21 +52,22 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="container">
+        <div id="appContainer">
           <Route path="/" component={Nav}/>
-          <Route 
-            exact path="/pictures" 
-            render={(props) => { return <PictureMap pictureList={this.state.pictureList} />}}
-          />
-          <Route 
-            exact path="/pictures/new"
-            render={(props) => { return <PictureCreator channel={this.state.channel} />}}
-          />
-          <Route 
-            exact path="/pictures/edit"
-            render={(props) => { return <PictureList list={this.state.pictureList} channel={this.state.channel}/>}}
-          />
-
+          <div className="container" id="contentContainer">
+            <Route 
+              exact path="/pictures" 
+              render={(props) => { return <PictureMap pictureList={this.state.pictureList} />}}
+            />
+            <Route 
+              exact path="/pictures/new"
+              render={(props) => { return <PictureCreator channel={this.state.channel} />}}
+            />
+            <Route 
+              exact path="/pictures/edit"
+              render={(props) => { return <PictureList list={this.state.pictureList} channel={this.state.channel}/>}}
+            />
+          </div>
         </div>
       </Router>
     );

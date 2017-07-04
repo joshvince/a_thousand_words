@@ -39,8 +39,10 @@ class PictureMap extends Component {
         <div id="mapContainer">
           <GoogleMapReact 
             id="map"
-            apiKey={"AIzaSyC7ivn_jzMKgf2_LZhHPHxAknOPx_6F28Y"}
-            defaultZoom={13}
+            bootstrapURLKeys={{
+              key: "AIzaSyC7ivn_jzMKgf2_LZhHPHxAknOPx_6F28Y"
+            }}
+            defaultZoom={10}
             center={{lat: 50.82, lng: -0.38 }}
             options={{gestureHandling: 'greedy'}}
             onClick={this.clicker} 

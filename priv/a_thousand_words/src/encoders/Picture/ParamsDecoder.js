@@ -1,12 +1,15 @@
-import LocationDecoder from '../Location/Decoder.js';
 // convert data received from the server into a format the UI can use.
+
+const buildImgUrl = (url) => {
+  return `http://localhost:4000/${url}`
+};
 
 const decode = (params) => {
   return {
-    ...params, 
-    location: LocationDecoder.decode(params.location)
+    ...params,
+    image: buildImgUrl(params.image)
   }
-}
+};
 
 const Decoder = {
   decode: decode

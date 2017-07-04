@@ -79,3 +79,6 @@ Use the React development server when developing UI.
 I'd never got a react/phoenix app talking to each other. These articles were useful:  
 https://www.viget.com/articles/phoenix-and-react-a-killer-combo  
 http://www.east5th.co/blog/2017/04/03/using-create-react-app-with-phoenix/
+
+### Uploading Images to S3 using channels
+https://medium.com/@_pat_nowak_/file-upload-from-phoenix-channels-to-amazon-s3-29bc203678f9
