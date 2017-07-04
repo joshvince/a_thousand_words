@@ -13,11 +13,7 @@ const FullModal = ({dismissAction, children}) => {
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="column">
-            {children}
-          </div>
-        </div>       
+        {children}     
       </div>
     </div>
   );

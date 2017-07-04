@@ -1,9 +1,24 @@
-.imgContainer{
-  max-width: 100%;
-  border-radius: 10%;
+/*mobile portrait */
+.imgContainer {
+  height: 48rem;
 }
 
+/* mobile landscape */
+@media (orientation: landscape) {
+  .imgContainer {
+    height: 40rem;
+  }
+}
+
+/* desktop */
+@media (min-width: 760px) {
+  .imgContainer {
+    height: 57rem;
+  }
+}
+
+
 img{
-  width: 100%;
-  height: auto;
+max-height: 100%;
+width: auto;
 }
