@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PictureSummary from './PictureSummary.js';
-import PictureChannel from '../Socket/pictureChannel.js';
+import PictureChannel from '../../Socket/pictureChannel.js';
 
 class PictureEditView extends Component {
   constructor(props){

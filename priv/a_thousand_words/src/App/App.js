@@ -6,8 +6,8 @@ import 'milligram';
 // Import components and styles
 import Nav from './Nav/Nav.js';
 import PictureMap from '../Map/PictureMap.js';
-import PictureCreator from '../Picture/PictureCreator.js';
-import PictureList from '../Picture/PictureList.js';
+import PictureCreator from '../Picture/Creator/PictureCreator.js';
+import PictureList from '../Picture/Edit/PictureList.js';
 import './App.css';
 
 // Import other helper modules
