@@ -44,7 +44,6 @@ class PictureMap extends Component {
             }}
             defaultZoom={10}
             center={{lat: 50.82, lng: -0.38 }}
-            options={{gestureHandling: 'greedy'}}
             onClick={this.clicker} 
           >
             {this.props.pictureList.map((pic, i)=> {

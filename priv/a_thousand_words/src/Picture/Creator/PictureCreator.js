@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import LocationSelector from '../Map/LocationSelector.js';
-import ParamsEncoder from '../Encoders/Picture/ParamsEncoder.js';
-import PictureChannel from '../Socket/pictureChannel.js';
+import LocationSelector from '../../Map/LocationSelector.js';
+import ParamsEncoder from '../../Encoders/Picture/ParamsEncoder.js';
+import PictureChannel from '../../Socket/pictureChannel.js';
 
 class PictureCreator extends Component {
   constructor(props){
