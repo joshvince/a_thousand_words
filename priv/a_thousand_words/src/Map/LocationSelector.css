@@ -1,0 +1,17 @@
+#mapContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#mapContainer > div {
+  max-width: 90%;
+}
+
+/* The map should be limited in width on larger screens */
+
+@media (min-width: 768px) {
+  #mapContainer > div {
+    max-width: 70%;
+  }
+}

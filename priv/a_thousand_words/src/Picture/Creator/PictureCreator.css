@@ -13,5 +13,12 @@
 }
 
 input[type='text'], textarea, input[type='number'] {
-  max-width: 70%;
+  max-width: 90%;
+}
+
+/* The input fields should be limited in width on larger screens */
+@media (min-width: 768px) {
+  input[type='text'], textarea, input[type='number'] {
+    max-width: 70%;
+  } 
 }
