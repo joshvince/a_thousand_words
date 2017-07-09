@@ -1,7 +1,7 @@
 #nav-container {
   height: 6rem;
-  background-color: black;
-  color: white;
+  background-color: #1B9AAA;
+  color: #FCFCFC;
   position: fixed;
   width: 100vw;
   z-index: 950;
@@ -9,12 +9,15 @@
   justify-content: space-between;
 }
 
-#logo{
-  padding: 1rem;
-  
+#nav-container a {
+  color: #FCFCFC;
 }
 
-#nav-menu{
+#logo {
+  padding: 1rem;
+}
+
+#nav-menu {
   display: flex;
   justify-content: center;
 }

@@ -1,0 +1,17 @@
+#picture-creator {
+  padding-top: 3rem;
+}
+
+#submit-button {
+  margin: 3rem;
+  width: 50%;
+  height: 5rem;
+  line-height: 5rem;
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: 'Merriweather', serif;
+}
+
+input[type='text'], textarea, input[type='number'] {
+  max-width: 70%;
+}
