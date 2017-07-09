@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Pin from './Pin.js';
+import googleMapStyles from './MapStyles.json';
 
 class LocationSelector extends Component {
   constructor(props){
@@ -37,7 +38,7 @@ class LocationSelector extends Component {
           }}          
           defaultZoom={7}
           center={{lat: 50.82, lng: -0.38 }}
-          options={{gestureHandling: 'greedy'}}
+          options={{gestureHandling: 'greedy', styles: googleMapStyles}}
           onClick={e => { this.movePin(e) }} 
         >
         {locationPin}

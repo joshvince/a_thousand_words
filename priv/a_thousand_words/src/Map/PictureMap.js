@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Pin from './Pin.js';
 import Picture from '../Picture/Picture.js';
+
 import './PictureMap.css';
+import googleMapStyles from './MapStyles.json';
 
 class PictureMap extends Component {
   constructor(props){
@@ -42,9 +44,10 @@ class PictureMap extends Component {
             bootstrapURLKeys={{
               key: "AIzaSyC7ivn_jzMKgf2_LZhHPHxAknOPx_6F28Y"
             }}
-            defaultZoom={10}
+            defaultZoom={8}
             center={{lat: 50.82, lng: -0.38 }}
             onClick={this.clicker} 
+            options={{styles: googleMapStyles}}
           >
             {this.props.pictureList.map((pic, i)=> {
               return(

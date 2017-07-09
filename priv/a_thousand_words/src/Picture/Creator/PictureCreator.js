@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import LocationSelector from '../../Map/LocationSelector.js';
 import ParamsEncoder from '../../Encoders/Picture/ParamsEncoder.js';
 import PictureChannel from '../../Socket/pictureChannel.js';
+import './PictureCreator.css';
 
 class PictureCreator extends Component {
   constructor(props){
@@ -64,11 +65,10 @@ class PictureCreator extends Component {
     })
   }
   render() {
-    // var ready = !this.requiredFieldsPresent(this.state.name, this.state.year)
     var ready = !this.requiredFieldsPresent(this.state)
 
     return (
-      <div className="column">
+      <div className="column" id="picture-creator">
         <h3>Create a new picture</h3>
         <form onSubmit={this.handleCreateSubmit}>
           <fieldset>
@@ -80,9 +80,9 @@ class PictureCreator extends Component {
           <textarea type="text" value={this.state.description} name="description" onChange={this.handleInputChange}/>
           <label htmlFor="year">Year *</label>
           <input type="number" value={this.state.year} name="year" onChange={this.handleInputChange}/>
-          <label htmlFor="location">Co-ordinates</label>
+          <label htmlFor="location">Location</label>
           <LocationSelector onLocationChange={this.setLocation}/>
-          <input className="button-primary" type="submit" value="Submit" disabled={ready}/>
+          <input id="submit-button" className="button-primary" type="submit" value="Create" disabled={ready}/>
           </fieldset>
         </form>   
       </div>

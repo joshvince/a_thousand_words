@@ -7,7 +7,7 @@ const Nav = () => {
   return (
     <div id="nav-container">
       <Link to="/pictures" id="logo">
-        1000
+        1000words
       </Link>
       <div id="nav-menu">
 
