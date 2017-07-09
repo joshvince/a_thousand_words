@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Pin from './Pin.js';
+import './LocationSelector.css';
 import googleMapStyles from './MapStyles.json';
 
 class LocationSelector extends Component {
