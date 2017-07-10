@@ -15,6 +15,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :a_thousand_words, AThousandWords.Web.Endpoint,
   on_init: {AThousandWords.Web.Endpoint, :load_from_system_env, []},
+  http: [port: {:system, "PORT"}],
   url: [scheme: "https", host: "stark-plateau-81447.herokuapp.com", port: 443],
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
