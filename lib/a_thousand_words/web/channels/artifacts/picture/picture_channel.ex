@@ -48,7 +48,7 @@ defmodule AThousandWords.Web.Artifacts.PictureChannel do
     with {:ok, %Picture{} = new_picture} <- Artifacts.create_picture(atomised_params) do
       new_list = Artifacts.list_pictures()
       broadcast_updates(:created, {new_picture, new_list}, socket)
-      {:noreply, socket}
+      {:reply, {:ok, %{picture: new_picture}}, socket}
     else
       {:error, reason} -> 
         {:reply, {:error, %{reason: reason}}, socket}
