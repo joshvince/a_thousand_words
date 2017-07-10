@@ -6,10 +6,10 @@ defmodule AThousandWords.Web.Endpoint do
   plug Plug.Static.IndexHtml,
   at: "/"
 
-  # plug Plug.Static,
-  #   at: "/",
-  #   from: "priv/a_thousand_words/build/",
-  #   only: ~w(index.html favicon.ico static)
+  plug Plug.Static,
+    at: "/",
+    from: "priv/a_thousand_words/build/",
+    only: ~w(index.html favicon.ico static)
 
   # temporarily serve images from priv/static so you can dev locally without S3.
   plug Plug.Static,
