@@ -17,10 +17,15 @@ const join = (socket) => {
 // create picture
 // takes in a channel object and some picture params, creates a picture and returns the response from the server
 const createPicture = (channel, pictureParams) => {
-  channel.push("create_picture", {params: pictureParams})
-    .receive("ok", resp => {
-      console.log(resp)
-    })
+  return new Promise((resolve, reject) => {
+    channel.push("create_picture", {params: pictureParams})
+      .receive("ok", resp => {
+        resolve(resp.picture)
+      })
+      .receive("error", resp => {
+        reject(resp)
+      })
+  })
 };
 
 // list pictures 

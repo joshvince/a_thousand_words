@@ -1,7 +1,7 @@
 // convert data received from the server into a format the UI can use.
 
 const buildImgUrl = (url) => {
-  return `http://localhost:4000/${url}`
+  return `${process.env.REACT_APP_IMAGE_SERVER}${url}`
 };
 
 const decode = (params) => {
