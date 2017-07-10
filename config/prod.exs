@@ -15,10 +15,16 @@ use Mix.Config
 # which you typically run after static files are built.
 config :a_thousand_words, AThousandWords.Web.Endpoint,
   on_init: {AThousandWords.Web.Endpoint, :load_from_system_env, []},
-  url: [host: "example.com", port: 80]
+  url: [scheme: "https", host: "stark-plateau-81447.herokuapp.com", port: 443],
+  secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 # Do not print debug messages in production
 config :logger, level: :info
+
+config :a_thousand_words, AThousandWords.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: System.get_env("DATABASE_URL"),
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 # ## SSL Support
 #
@@ -62,4 +68,6 @@ config :a_thousand_words, :image_uploader, AThousandWords.ImageUploader
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-import_config "prod.secret.exs"
+
+# WE DONT NEED TO DO THIS AS WE ARE USING HEROKU ENV VARIABLES
+# import_config "prod.secret.exs"
