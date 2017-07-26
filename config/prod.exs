@@ -16,6 +16,7 @@ use Mix.Config
 config :a_thousand_words, AThousandWords.Web.Endpoint,
   on_init: {AThousandWords.Web.Endpoint, :load_from_system_env, []},
   url: [scheme: "https", host: "stark-plateau-81447.herokuapp.com", port: 443],
+  check_origin: ["https://joshvince.github.io"],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
